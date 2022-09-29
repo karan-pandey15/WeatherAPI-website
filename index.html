@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    
+
+    <title>Weather-API</title>
+</head>
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+     */
+     display: flex;
+     justify-content: center;
+     margin-top: 170px;
+}
+.container{
+    height: 450px;
+    width: 300px;
+    background: linear-gradient(rgb(122, 185, 206),rgb(180, 212, 222));
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px lightblue;
+}
+#weathercon{
+    margin-top: 60px;
+    color: aqua;
+    font-size: 5rem;
+}
+.report{
+    margin-top: 110px;
+}
+</style>
+<body>
+    <div class="container">
+        <center>
+            <h1 id="weathercon" ><i class="fa fa-sun-o" aria-hidden="true"></i>
+            </h1>
+            <div class="report">
+                <h1 class="location" ><pre><i class="fa fa-user" aria-hidden="true"></i> <b>{%location%}, {%country%} </b> </pre></h1>
+                
+                <p id="date"> </p>
+
+                <br><br>
+                <h1 class="temp" >{%tempval%}&deg;C</h1>
+                <p class="tempmin_max" >Min {%tempmin%}&deg;C| Max {%tempmax%}&deg;C</p>
+            </div>
+        </center>
+    </div> 
+    <script>
+        
+        const curdate = document.getElementById('date');
+        const weathercon = document.getElementById('weathercon')
+        const tempStatus = "{%tempstatus%}";
+
+        if(tempStatus=="Sunny"){
+            weathercon.innerHTML = "<i class='fa fa-sun-o'></i>";
+        }
+        else if(tempStatus=="Clouds"){
+            weathercon.innerHTML = "<i class='fa fa-cloud' style='color:rgb(66, 180, 215)' ></i>";
+        }
+        else if(tempStatus=="Rainy"){
+            weathercon.innerHTML = "<i class='fa fa-cloud-download'style='color:rgb(66, 180, 215)'></i>";
+        }
+        else{
+            weathercon.innerHTML = "<i class='fa fa-cloud'></i>";
+        }
+        
+        
+        const getCurrentDay = ()=>{
+            var weekday = new Array(7);
+
+            weekday[0] = "Sun";
+            weekday[1] = "Mon";
+            weekday[2] = "Tue";
+            weekday[3] = "Wed";
+            weekday[4] = "Thu";
+            weekday[5] = "Fri";
+            weekday[6] = "Sat";
+
+            let currentTime = new Date();
+            let day = weekday[currentTime.getDay()];
+            return  day ;
+        }
+        getCurrentDay();
+
+        const getCurrentTime = ()=>{
+            const months = new Array(12);
+
+            months[0]  = "Jan";
+            months[1]  = "Feb";
+            months[2]  = "Mar";
+            months[3]  = "Apr";
+            months[4]  = "May";
+            months[5]  = "June";
+            months[6]  = "July";
+            months[7]  = "Aug";
+            months[8]  = "Sept";
+            months[9]  = "Oct";
+            months[10] = "Nov";
+            months[11] = "Dec";
+            
+
+            var now = new Date();
+            var month = months[now.getMonth()];
+            var date = now.getDate();
+            
+            var hour = now.getHours();
+            var min = now.getMinutes();
+
+            let period = "AM"
+
+            if(hour>=12){
+                period = "PM";
+                hour = hour-12;
+            }
+            if(min<10){
+                min = "0" + min;
+            }     
+            
+            return `${month} ${date} | ${hour}:${min} ${period}  `;
+        }
+        getCurrentTime();
+        curdate.innerHTML = getCurrentDay() + " | " + getCurrentTime() ;
+
+    </script>   
+</body>
+</html>
